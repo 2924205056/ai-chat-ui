@@ -2,129 +2,40 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>企业内部系统 - AI客服接入演示</title>
+    <title>企业内部系统 - AI客服接入</title>
     <style>
-        /* 基础页面样式，模拟内部系统 */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f5f7;
-            margin: 0;
             padding: 20px;
-        }
-
-        /* --- 悬浮按钮样式 --- */
-        #ai-float-btn {
-            position: fixed;
-            right: 30px;
-            bottom: 30px;
-            width: 60px;
-            height: 60px;
-            background-color: #165dff; /* 科技蓝 */
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(22, 93, 255, 0.3);
-            transition: transform 0.2s, background-color 0.2s;
-            z-index: 999;
-        }
-
-        #ai-float-btn:hover {
-            transform: scale(1.05);
-            background-color: #0e42d2;
-        }
-
-        /* --- 右侧抽屉面板样式 --- */
-        #ai-drawer {
-            position: fixed;
-            top: 0;
-            right: -400px; /* 初始状态隐藏在屏幕右侧之外，宽度设为400px */
-            width: 400px;
-            height: 100vh; /* 占满整个屏幕高度 */
-            background-color: #ffffff;
-            box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
-            transition: right 0.3s ease-in-out; /* 平滑滑出的动画 */
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* 当抽屉打开时，给抽屉添加这个类 */
-        #ai-drawer.open {
-            right: 0;
-        }
-
-        /* 抽屉头部 */
-        .drawer-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid #e5e6eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .drawer-header h3 {
-            margin: 0;
-            font-size: 16px;
-            color: #1d2129;
-        }
-
-        .close-btn {
-            cursor: pointer;
-            font-size: 20px;
-            color: #86909c;
-        }
-
-        .close-btn:hover {
-            color: #1d2129;
-        }
-
-        /* 抽屉内容区（这里可以嵌入Iframe，或者自己写对话流） */
-        .drawer-content {
-            flex: 1;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        /* 嵌入AI平台的网页 */
-        .drawer-content iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
         }
     </style>
 </head>
 <body>
 
     <h1>企业内部系统仪表盘</h1>
-    <p>这里是你们现有的业务页面内容...</p>
+    <p>这里是内部业务系统的内容。请看屏幕右下角，Coze 的智能客服已经挂载成功啦！</p>
 
-    <div id="ai-float-btn" onclick="toggleDrawer()">AI客服</div>
-
-    <div id="ai-drawer">
-        <div class="drawer-header">
-            <h3>智能客服助理</h3>
-            <span class="close-btn" onclick="toggleDrawer()">×</span>
-        </div>
-        <div class="drawer-content">
-            <div style="padding: 20px; color: #666; font-size: 14px;">
-                此处加载客服对话界面... <br><br>
-                (前端将在这里通过 API 将用户的输入发送给后端的 LangGraph 服务)
-            </div>
-        </div>
-    </div>
-
+    <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+    
     <script>
-        function toggleDrawer() {
-            const drawer = document.getElementById('ai-drawer');
-            // 切换 'open' 类，CSS 的 transition 会自动处理平滑滑动动画
-            drawer.classList.toggle('open');
+      new CozeWebSDK.WebChatClient({
+        config: {
+          bot_id: '7599160604959637504',
+        },
+        componentProps: {
+          title: '内部智能客服', 
+        },
+        auth: {
+          type: 'token',
+          // 【注意！！！】请务必把你真实的 pat_ 开头的 Token 替换掉下面的 'pat_********'
+          token: 'pat_********',
+          onRefreshToken: function () {
+            // 这里也要替换成真实的 Token
+            return 'pat_********'
+          }
         }
+      });
     </script>
 
 </body>
